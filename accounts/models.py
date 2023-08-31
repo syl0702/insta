@@ -10,3 +10,4 @@ class User(AbstractUser):
         upload_to='profile',
     )
     # post_set =
+    # post_set 였으나 중복으로 인해 related_name 거쳐서 like_posts=가 됨.
