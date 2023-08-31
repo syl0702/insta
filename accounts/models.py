@@ -11,3 +11,6 @@ class User(AbstractUser):
     )
     # post_set =
     # post_set 였으나 중복으로 인해 related_name 거쳐서 like_posts=가 됨.
+
+    followings = models.ManyToManyField('self', related_name='followers', symmetrical=False)
+    # followers = 칼럼 생김 나를 팔로잉 하는 사람 following은 내가 팔로우 하는 사람들

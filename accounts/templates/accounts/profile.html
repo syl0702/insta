@@ -9,7 +9,17 @@
     <div class="col-8">
         <div class="row">
             <div class="col-3">{{user_info.username}}</div>
-            <div class="col-4"><a href="">팔로우</a></div>
+
+            <!-- user: 로그인한 사람 / user_info: 프로필 페이지 유저 -->
+            {% if user != user_info %}
+            <div class="col-4">
+                {% if user in user_info.followers.all %}
+                    <a href="{% url 'accounts:follow' username=user_info.username %}" class="btn btn-primary btn-sm">팔로잉</a></div>
+                {% else %}
+                <a href="{% url 'accounts:follow' username=user_info.username %}" class="btn btn-secondary btn-sm">팔로우</a></div>
+                {% endif %}
+            {% endif %}
+
         </div>
         <div class="row">
             <div class="col">게시물</div>
