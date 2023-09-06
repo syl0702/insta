@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Post
+from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -32,7 +32,6 @@ def create(request):
 
     return render(request, 'form.html', context)
 
-
 @login_required
 def comment_create(request, post_id):
     comment_form = CommentForm(request.POST)
@@ -49,7 +48,49 @@ def comment_create(request, post_id):
         comment.save()
 
         return redirect('posts:index')
+
+@login_required
+def delete(request, id):
+    post = Post.objects.get(id=id)
+    post.delete()
+
+    return redirect('posts:index')
+
+@login_required
+def edit(request, id):
+    post = Post.objects.get(id=id)
+
+    context = {
+        'post': post,
+    }
     
+    return render(request, 'edit.html',context)
+
+
+@login_required
+def update(request, id):
+    # new data
+    title = request.POST.get('title')
+    content = request.POST.get('content')
+
+    # old data
+    post = Post.objects.get(id=id)
+    post.title = title
+    post.content = content
+    post.save()
+
+    return redirect('posts:detail', id=post.id)
+
+
+
+@login_required 
+def comment_delete(request, post_id, id):
+    comment = Comment.objects.get(id=id)
+
+    comment.delete()
+
+    return redirect('posts:index')
+
 @login_required
 def like(request, post_id):
 

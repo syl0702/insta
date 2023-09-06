@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 # from .models import User
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -17,6 +18,7 @@ def signup(request):
 
     context = {
         'form': form,
+        'page_title': 'Sign Up'
     }
 
     return render(request, 'accounts/form.html', context)
@@ -34,9 +36,17 @@ def login(request):
     
     context = {
         'form': form,
+        'page_title': 'Login'
     }
 
     return render(request, 'accounts/form.html', context)
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect('accounts:login')
+
+
 
 def profile(request, username):
     User = get_user_model()

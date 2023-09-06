@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="{% url 'posts:update' id=post.id %}" method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="title" class="form-label">제목</label>
+      <input type="text" class="form-control" id="title" name="title" value="{{post.title}}">
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">내용</label>
+      <!-- <input type="password" class="form-control" id="exampleInputPassword1"> -->
+      <textarea class="form-control" id="content" cols="30" rows="10" name="content">{{post.content}}</textarea>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

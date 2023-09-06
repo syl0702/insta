@@ -4,6 +4,10 @@
     <p>
       <img src="{{post.user.profile_image.url}}" alt="" class="rounded-circle" width="50px">
       <a href="{% url 'accounts:profile' username=post.user %}" class="text-reset text-decoration-none">{{post.user}}</a>
+      {% if user == post.user %}
+        <a href="{% url 'posts:edit' id=post.id %}" class="btn btn-outline-primary">edit</a>
+        <a href="{% url 'posts:delete' id=post.id %}" class="btn btn-outline-primary">delete</a>
+      {% endif %}
     </p>
   </div>
     <img src="{{post.image.url}}" alt="...">
@@ -31,7 +35,14 @@
       {% endif %}
 
       {% for comment in post.comment_set.all %}
-        <li>{{comment.user}} : {{comment.content}}</li>
+        <li>{{comment.user}} : {{comment.content}}
+          {% if user == comment.user %}
+          <a href="{% url 'posts:comment_delete' post_id=post.id id=comment.id %}">
+          <i class="bi bi-trash3"></i>
+        </a>
+        {% endif %}
+        </li>
+        
       {% endfor %}
     </div>
   </div>
