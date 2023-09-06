@@ -32,6 +32,19 @@ def create(request):
 
     return render(request, 'form.html', context)
 
+def detail(request, id):
+    post = Post.objects.get(id=id)
+    comment_form = CommentForm()
+    context = {
+        'post': post,
+        'comment_form': comment_form,
+    }
+
+    return render(request, 'detail.html', context)
+
+
+
+
 @login_required
 def comment_create(request, post_id):
     comment_form = CommentForm(request.POST)
