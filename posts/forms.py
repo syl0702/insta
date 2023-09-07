@@ -2,6 +2,9 @@ from django import forms
 from .models import Post, Comment
 
 class PostForm(forms.ModelForm):
+    image = forms.ImageField(
+        required=True,
+    )
     class Meta:
         model = Post
         # fields = '__all__'
