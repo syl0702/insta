@@ -83,16 +83,26 @@ def edit(request, id):
 @login_required
 def update(request, id):
     # new data
-    title = request.POST.get('title')
+    # title = request.POST.get('title')
     content = request.POST.get('content')
 
-    # old data
+    # # old data
     post = Post.objects.get(id=id)
-    post.title = title
-    post.content = content
-    post.save()
+    # post.title = title
+    # post.content = content
+    # post.save()
 
-    return redirect('posts:detail', id=post.id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('posts:detail', id=post.id)
+        
+        context = {
+            'form': PostForm(instance=post),
+            'post': post,
+        }
+    return redirect(request, 'edit.html', context)
 
 
 

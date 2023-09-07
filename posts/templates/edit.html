@@ -6,6 +6,10 @@
     {% csrf_token %}
     
     <div class="mb-3">
+      <label for="image" class="form-label">Upload Image</label>
+      <input type="file" class="form-control" id="image" name="image">
+    </div>
+    <div class="mb-3">
       <label for="content" class="form-label">내용</label>
       <!-- <input type="password" class="form-control" id="exampleInputPassword1"> -->
       <textarea class="form-control" id="content" cols="30" rows="10" name="content">{{post.content}}</textarea>
